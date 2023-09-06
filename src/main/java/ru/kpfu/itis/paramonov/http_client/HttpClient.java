@@ -15,8 +15,13 @@ public class HttpClient implements IHttpClient {
     public String get(String url, Map<String, String> params) {
         String res = null;
         try {
-            String newUrl = addParamsToUrl(url, params);
-            HttpURLConnection connection = getConnection(newUrl, "GET");
+            HttpURLConnection connection;
+            if (!params.isEmpty()) {
+                String newUrl = addParamsToUrl(url, params);
+                connection = getConnection(newUrl, "GET");
+            } else {
+                connection = getConnection(url, "GET");
+            }
             res = getInfo(connection);
         } catch (MalformedURLException e) {
             System.out.println("The URL is invalid");
@@ -62,13 +67,19 @@ public class HttpClient implements IHttpClient {
     public String delete(String url, Map<String, String> params) {
         String res = null;
         try {
-            String newUrl = addParamsToUrl(url, params);
-            HttpURLConnection connection = getConnection(newUrl, "DELETE");
-            connection.connect();
+            HttpURLConnection connection;
+            if (!params.isEmpty()) {
+                String newUrl = addParamsToUrl(url, params);
+                connection = getConnection(newUrl, "DELETE");
+            } else {
+                connection = getConnection(url, "DELETE");
+            }
+            //writeContent(getJson(params), connection);
             res = getInfo(connection);
         } catch (MalformedURLException e) {
             System.out.println("The URL is invalid");
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
 
         return res;
     }
@@ -79,7 +90,7 @@ public class HttpClient implements IHttpClient {
         for (String key : params.keySet()) {
             res.append(key).append("=").append(params.get(key)).append("&");
         }
-        return res.substring(0, res.length() - 2);
+        return res.substring(0, res.length() - 1);
     }
 
     private String getJson(Map<String, String> params) {
@@ -131,6 +142,7 @@ public class HttpClient implements IHttpClient {
             url = new URL(urlString);
         } catch (MalformedURLException e) {throw e;}
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setConnectTimeout(5000);
 
         connection.setRequestMethod(method.toUpperCase());
         connection.setRequestProperty("Content-Type", "application/json");
