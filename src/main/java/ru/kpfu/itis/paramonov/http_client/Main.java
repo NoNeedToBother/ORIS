@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        HttpClient client = new HttpClient();
+        HttpClientImpl client = new HttpClientImpl();
         Map<String, String> params = new HashMap<>();
         params.put("name", "Vasiliy Pupkin");
         params.put("email", "vasil@test.tt");
