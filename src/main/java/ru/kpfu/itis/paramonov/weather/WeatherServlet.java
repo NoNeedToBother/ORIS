@@ -46,19 +46,16 @@ public class WeatherServlet extends HttpServlet {
         params.put("appid", API_KEY);
 
         String content = client.get(url, params);
-        System.out.println(content);
 
-        JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) JSONValue.parse(content);
         Long code = (Long) json.get("cod");
         if (200 <= code && code < 300) {
             JSONArray weather = (JSONArray) json.get("weather");
             String weatherType = (String) ((JSONObject) weather.get(0)).get("description");
-            req.setAttribute("weathertype", weatherType);
             Double temperature = ((Double) ((JSONObject) json.get("main")).get("temp")) - 273;
             Long humidity = (Long) ((JSONObject) json.get("main")).get("humidity");
-            req.setAttribute("temperature", temperature);
-            req.setAttribute("humidity", humidity);
+            WeatherDto weatherDto = new WeatherDto(temperature, humidity, weatherType);
+            req.setAttribute("weatherinfo", weatherDto);
             req.setAttribute("res", 0);
         } else {
             req.setAttribute("res", code);

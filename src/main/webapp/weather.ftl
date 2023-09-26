@@ -16,11 +16,13 @@
             The error occurred.
         </#if>
         <#if res=0>
-            Temperature: ${temperature} &degC
-            <br>
-            Humidity: ${humidity}%
-            <br>
-            Weather type: ${weathertype}
+            <#if weatherinfo?has_content>
+                Temperature: ${weatherinfo.temperature} &degC
+                <br>
+                Humidity: ${weatherinfo.humidity}%
+                <br>
+                Weather type: ${weatherinfo.weathertype}
+            </#if>
         </#if>
     </div>
 </#macro>

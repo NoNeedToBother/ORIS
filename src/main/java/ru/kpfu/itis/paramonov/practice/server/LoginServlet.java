@@ -5,10 +5,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet(name = "loginServlet", urlPatterns = "/practice/login")
+@WebServlet(name = "loginServlet", urlPatterns = "/haha/login")
 public class LoginServlet extends HttpServlet {
 
-    public final String LOGIN = "VASYA_PUPKIN";
+    public final String LOGIN = "vasya pupkin";
     public final String PASSWORD = "qwerty";
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

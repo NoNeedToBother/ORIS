@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -15,7 +16,7 @@ public class LoginServlet extends HttpServlet {
         req.getRequestDispatcher("login.ftl").forward(req, resp);
     }
 
-    private String LOGIN = "Vasya Pupkin";
+    private String LOGIN = "Vasya";
     private String PASSWORD = "qwerty";
 
     @Override
@@ -24,6 +25,9 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         if(login.equalsIgnoreCase(LOGIN) && password.equalsIgnoreCase(PASSWORD)) {
+            HttpSession httpSession = req.getSession();
+            httpSession.setAttribute("username", login);
+            httpSession.setMaxInactiveInterval(3600);
             resp.sendRedirect("city.ftl");
         } else {
             resp.sendRedirect("/login");

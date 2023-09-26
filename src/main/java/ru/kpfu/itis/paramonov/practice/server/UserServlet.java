@@ -1,5 +1,8 @@
 package ru.kpfu.itis.paramonov.practice.server;
 
+import ru.kpfu.itis.paramonov.practice.dto.UserDto;
+
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,11 +14,18 @@ import java.util.List;
 
 @WebServlet(name = "userServlet", urlPatterns = "/users")
 public class UserServlet extends HttpServlet {
+
+    private static final List<UserDto> USERS = setUsers();
+
+    private static List<UserDto> setUsers() {
+        List<UserDto> res = new ArrayList<>();
+        res.add(0, new UserDto("Vasya", "Pupkin"));
+        res.add(1, new UserDto("Hihi", "Haha"));
+        return res;
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<String> users = new ArrayList<>();
-        users.add("Ivan"); users.add("Vasya"); users.add("Pupkin");
-        req.setAttribute("users", users);
+        req.setAttribute("users", USERS);
         req.getRequestDispatcher("users.ftl").forward(req, resp);
 
     }

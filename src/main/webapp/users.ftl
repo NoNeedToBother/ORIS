@@ -6,10 +6,12 @@
 <#macro content>
     Hello,
     <br>
-    <#list users as u>
-        ${u}
-        <br>
-    </#list>
+    <#if users?has_content>
+        <#list users as u>
+            ${u.firstname} ${u.lastname }
+            <br>
+        </#list>
+    </#if>
 </#macro>
 
 </html>
