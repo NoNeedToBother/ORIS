@@ -1,8 +1,7 @@
-package ru.kpfu.itis.paramonov.practice.server;
+package ru.kpfu.itis.paramonov.practice.servlet;
 
 import ru.kpfu.itis.paramonov.practice.dto.UserDto;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

@@ -1,4 +1,4 @@
-package ru.kpfu.itis.paramonov.practice.server;
+package ru.kpfu.itis.paramonov.practice.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

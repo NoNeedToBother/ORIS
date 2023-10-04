@@ -1,4 +1,4 @@
-package ru.kpfu.itis.paramonov.practice.server;
+package ru.kpfu.itis.paramonov.practice.servlet;
 
 
 import javax.servlet.ServletException;
@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet(name = "helloServlet", urlPatterns = "/hello")
 public class HelloServlet extends HttpServlet {
