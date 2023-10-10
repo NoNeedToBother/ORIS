@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("username", login);
             httpSession.setMaxInactiveInterval(3600);
-            resp.sendRedirect("city.ftl");
+            resp.sendRedirect("/weather");
         } else {
             resp.sendRedirect("/login");
         }

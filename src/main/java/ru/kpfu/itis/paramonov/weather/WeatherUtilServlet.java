@@ -3,7 +3,6 @@ package ru.kpfu.itis.paramonov.weather;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
 import ru.kpfu.itis.paramonov.http_client.HttpClient;
 import ru.kpfu.itis.paramonov.http_client.HttpClientImpl;
 
@@ -13,28 +12,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "weatherServlet", urlPatterns = "/weather")
-public class WeatherServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/weather/util")
+public class WeatherUtilServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("city.ftl").forward(req, resp);
-    }
+        putWeatherAttr(req.getParameter("city"), req);
 
-    /*@Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //String city = req.getParameter("city");
-        //putWeatherAttr(city, req);
-        /*resp.setContentType("text/plain");
+        resp.setContentType("text/plain");
 
         String content = "Result: \n" +
                 "Temperate: %s \n" +
@@ -45,10 +33,7 @@ public class WeatherServlet extends HttpServlet {
 
         resp.getWriter().write(String.format(content, weather.getTemperature(), weather.getHumidity(),
                 weather.getWeathertype()));
-
-        //req.getRequestDispatcher("weather.ftl").forward(req, resp);
-    }*/
-
+    }
 
     private String API_KEY = "8b4a0acd96ca08b566885cabd39599e7";
 
@@ -72,11 +57,9 @@ public class WeatherServlet extends HttpServlet {
             Long humidity = (Long) ((JSONObject) json.get("main")).get("humidity");
             WeatherDto weatherDto = new WeatherDto(temperature, humidity, weatherType);
             req.setAttribute("weatherinfo", weatherDto);
-            session.setAttribute("weather_info", weatherDto);
             req.setAttribute("res", 0);
         } else {
             req.setAttribute("res", code);
         }
     }
-
 }
